@@ -1,2 +1,2 @@
 app:
-  allocate-heap-size: ${ALLOCATE_HEAP_SIZE:1}
+  allocate-heap-size: ${ALLOCATE_HEAP_SIZE:0}

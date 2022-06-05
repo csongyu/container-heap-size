@@ -17,11 +17,17 @@ if [ -n "$3" ]; then
     var_java_opts="$3"
 fi
 echo "JAVA_OPTS is: $var_java_opts"
+# get allocate heap size parameter
+var_allocate_heap_size=0
+if [ -n "$4" ]; then
+    var_allocate_heap_size="$4"
+fi
+echo "allocate heap size is: $var_allocate_heap_size"
 # run image
 if [ -n "$var_memory_limit" ] && [ -n "$var_java_opts" ]; then
-  docker run -it --rm --memory="$var_memory_limit" -e JAVA_OPTS="$var_java_opts" container-heap-size:"$var_image_tag"
+  docker run -it --rm --memory="$var_memory_limit" -e JAVA_OPTS="$var_java_opts" -e ALLOCATE_HEAP_SIZE="$var_allocate_heap_size" container-heap-size:"$var_image_tag"
 elif [ -n "$var_memory_limit" ]; then
-  docker run -it --rm --memory="$var_memory_limit" container-heap-size:"$var_image_tag"
+  docker run -it --rm --memory="$var_memory_limit" -e ALLOCATE_HEAP_SIZE="$var_allocate_heap_size" container-heap-size:"$var_image_tag"
 else
-  docker run -it --rm container-heap-size:"$var_image_tag"
+  docker run -it --rm -e ALLOCATE_HEAP_SIZE="$var_allocate_heap_size" container-heap-size:"$var_image_tag"
 fi
